@@ -19,13 +19,17 @@ const extractRegions = (data) => {
 };
 
 async function fetchRegions() {
-  const resp = await fetch(`${TAG_PATH}.json`);
-  if (!resp.ok) return [];
+  try {
+    const resp = await fetch(`${TAG_PATH}.json`);
+    if (!resp.ok) return [];
 
-  const data = await resp.json();
-  return extractRegions(data)
-    .map((tag) => ({ key: tag.name, label: tag.title }))
-    .filter(({ key, label }) => key && label);
+    const data = await resp.json();
+    return extractRegions(data)
+      .map((tag) => ({ key: tag.name, label: tag.title }))
+      .filter(({ key, label }) => key && label);
+  } catch (e) {
+    return [];
+  }
 }
 
 function buildSelect(regions) {
@@ -56,17 +60,30 @@ export default async function decorate(block) {
   controls.className = 'region-picker-controls';
   const content = document.createElement('div');
   content.className = 'region-picker-content';
+  content.setAttribute('aria-live', 'polite');
 
   const select = buildSelect(regions);
   select.addEventListener('change', async (event) => {
     const { value } = event.target;
-    const fragment = await loadFragment(`${FRAGMENT_ROOT}/${value}`);
-    if (fragment) {
-      content.replaceChildren(...fragment.childNodes);
-      return;
+    if (!value) return;
+
+    content.textContent = 'Loading region content...';
+    try {
+      const fragment = await loadFragment(`${FRAGMENT_ROOT}/${value}`);
+      if (fragment) {
+        content.replaceChildren(...fragment.childNodes);
+        return;
+      }
+    } catch (e) {
+      // no-op and show fallback message
     }
     content.textContent = FALLBACK_MESSAGE;
   });
+
+  if (!regions.length) {
+    select.disabled = true;
+    content.textContent = 'No regions are available right now.';
+  }
 
   controls.append(select);
   block.replaceChildren(controls, content);

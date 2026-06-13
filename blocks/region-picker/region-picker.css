@@ -4,7 +4,13 @@
 
 .region-picker .region-picker-select {
   max-width: 20rem;
+  min-height: 2.75rem;
   padding: 0.5rem;
+}
+
+.region-picker .region-picker-select:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 2px;
 }
 
 .region-picker .region-picker-content {
