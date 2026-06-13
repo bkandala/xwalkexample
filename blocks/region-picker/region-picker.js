@@ -68,6 +68,7 @@ export default async function decorate(block) {
     if (!value) return;
 
     content.textContent = 'Loading region content...';
+    content.setAttribute('aria-busy', 'true');
     try {
       const fragment = await loadFragment(`${FRAGMENT_ROOT}/${value}`);
       if (fragment) {
@@ -75,7 +76,10 @@ export default async function decorate(block) {
         return;
       }
     } catch (e) {
-      // no-op and show fallback message
+      // eslint-disable-next-line no-console
+      console.error('Failed to load region fragment:', e);
+    } finally {
+      content.setAttribute('aria-busy', 'false');
     }
     content.textContent = FALLBACK_MESSAGE;
   });

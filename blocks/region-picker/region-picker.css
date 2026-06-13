@@ -1,9 +1,13 @@
+.region-picker {
+  --region-picker-max-width: 20rem;
+}
+
 .region-picker .region-picker-controls {
   display: flex;
 }
 
 .region-picker .region-picker-select {
-  max-width: 20rem;
+  max-width: var(--region-picker-max-width);
   min-height: 2.75rem;
   padding: 0.5rem;
 }
