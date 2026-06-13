@@ -1,0 +1,12 @@
+.region-picker .region-picker-controls {
+  display: flex;
+}
+
+.region-picker .region-picker-select {
+  max-width: 20rem;
+  padding: 0.5rem;
+}
+
+.region-picker .region-picker-content {
+  margin-top: 1rem;
+}
