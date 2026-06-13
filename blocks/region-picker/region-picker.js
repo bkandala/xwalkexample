@@ -60,18 +60,18 @@ export default async function decorate(block) {
   controls.className = 'region-picker-controls';
   const content = document.createElement('div');
   content.className = 'region-picker-content';
-  content.setAttribute('aria-live', 'polite');
 
   const select = buildSelect(regions);
   select.addEventListener('change', async (event) => {
     const { value } = event.target;
     if (!value) return;
 
+    content.setAttribute('aria-live', 'polite');
     content.textContent = 'Loading region content...';
     content.setAttribute('aria-busy', 'true');
     try {
       const fragment = await loadFragment(`${FRAGMENT_ROOT}/${value}`);
-      if (fragment) {
+      if (fragment?.childNodes.length) {
         content.replaceChildren(...fragment.childNodes);
         return;
       }

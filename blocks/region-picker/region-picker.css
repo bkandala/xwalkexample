@@ -1,5 +1,6 @@
 .region-picker {
   --region-picker-max-width: 20rem;
+  --region-picker-focus-color: #1a1a1a;
 }
 
 .region-picker .region-picker-controls {
@@ -13,7 +14,7 @@
 }
 
 .region-picker .region-picker-select:focus-visible {
-  outline: 2px solid var(--link-color);
+  outline: 2px solid var(--region-picker-focus-color);
   outline-offset: 2px;
 }
 
