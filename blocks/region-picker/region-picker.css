@@ -1,0 +1,23 @@
+.region-picker {
+  --region-picker-max-width: 20rem;
+  --region-picker-focus-color: #1a1a1a;
+}
+
+.region-picker .region-picker-controls {
+  display: flex;
+}
+
+.region-picker .region-picker-select {
+  max-width: var(--region-picker-max-width);
+  min-height: 2.75rem;
+  padding: 0.5rem;
+}
+
+.region-picker .region-picker-select:focus-visible {
+  outline: 2px solid var(--region-picker-focus-color);
+  outline-offset: 2px;
+}
+
+.region-picker .region-picker-content {
+  margin-top: 1rem;
+}
